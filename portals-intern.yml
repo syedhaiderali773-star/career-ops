@@ -1,0 +1,446 @@
+# Portal Scanner Configuration — internship / working student only
+# User layer. Used when the user asks to scan internship or working-student jobs.
+# PowerShell: $env:CAREER_OPS_PORTALS = "portals-intern.yml"; node scan.mjs
+#
+# Do not include Trainee as a positive — Trainee programmes are full-time (portals.yml).
+
+title_filter:
+  positive:
+    - "internship"
+    - "word:intern"
+    - "intern ("
+    - "intern -"
+    - "intern/"
+    - " intern-"
+    - "working student"
+    - "student assistant"
+  negative:
+    - "word:senior"
+    - "director"
+    - "vice president"
+    - "principal"
+    - "head of"
+    - "chief "
+    - "ausbildung"
+    - "apprentice"
+    - "software engineer"
+    - "developer"
+    - "firmware"
+    - "embedded"
+    - "schülerpraktikum"
+  seniority_boost: []
+
+location_filter:
+  always_allow:
+    - "Germany"
+    - "Deutschland"
+    - "Munich"
+    - "München"
+    - "Berlin"
+    - "Hamburg"
+    - "Frankfurt"
+    - "Cologne"
+    - "Köln"
+    - "Stuttgart"
+    - "Düsseldorf"
+    - "Dusseldorf"
+    - "Leipzig"
+    - "Nuremberg"
+    - "Nürnberg"
+    - "Dortmund"
+    - "Essen"
+    - "Bremen"
+    - "Dresden"
+    - "Hannover"
+    - "Aachen"
+    - "Karlsruhe"
+    - "Mannheim"
+    - "Freiburg"
+    - "Augsburg"
+    - "Heidelberg"
+    - "Deutschlandweit"
+  allow:
+    - "Remote"
+    - "Hybrid"
+    - "Germany"
+    - "Deutschland"
+    - "DE"
+    - "Munich"
+    - "München"
+    - "Berlin"
+    - "Hamburg"
+    - "Frankfurt"
+    - "Cologne"
+    - "Köln"
+    - "Stuttgart"
+    - "Düsseldorf"
+    - "Dusseldorf"
+    - "Leipzig"
+    - "Nuremberg"
+    - "Nürnberg"
+  block:
+    - "India"
+    - "Bengaluru"
+    - "Bangalore"
+    - "Pakistan"
+    - "Karachi"
+    - "United Kingdom"
+    - "London"
+    - "United States"
+    - "USA"
+    - "San Francisco"
+    - "New York"
+    - "France"
+    - "Paris"
+    - "Singapore"
+    - "Japan"
+    - "Brazil"
+    - "Australia"
+    - "Poland"
+    - "Warsaw"
+    - "Indonesia"
+    - "Netherlands"
+    - "Amsterdam"
+    - "Switzerland"
+    - "Zurich"
+    - "Zürich"
+    - "Austria"
+    - "Vienna"
+    - "Wien"
+    - "Spain"
+    - "Barcelona"
+    - "Madrid"
+    - "Italy"
+    - "Milan"
+    - "Canada"
+
+trust_filter:
+  enabled: true
+
+search_queries:
+  - name: Greenhouse — Germany intern / WS
+    query: 'site:job-boards.greenhouse.io ("Internship" OR Intern OR "Working Student" ) '
+    enabled: true
+  - name: Ashby — Germany intern / WS
+    query: 'site:jobs.ashbyhq.com ("Internship" OR "Working Student") (Germany)'
+    enabled: true
+  - name: Personio — Germany intern / WS
+    query: 'site:jobs.personio.de ( Internship OR "Working Student") (Deutschland)'
+    enabled: true
+
+tracked_companies:
+  - name: Celonis
+    careers_url: https://job-boards.greenhouse.io/celonis
+    api: https://boards-api.greenhouse.io/v1/boards/celonis/jobs
+    enabled: true
+
+  - name: N26
+    careers_url: https://job-boards.greenhouse.io/n26
+    api: https://boards-api.greenhouse.io/v1/boards/n26/jobs
+    enabled: true
+
+  - name: Trade Republic
+    careers_url: https://job-boards.greenhouse.io/traderepublicbank
+    api: https://boards-api.greenhouse.io/v1/boards/traderepublicbank/jobs
+    enabled: true
+
+  - name: HelloFresh
+    careers_url: https://job-boards.greenhouse.io/hellofresh
+    api: https://boards-api.greenhouse.io/v1/boards/hellofresh/jobs
+    enabled: true
+
+  - name: GetYourGuide
+    careers_url: https://job-boards.greenhouse.io/getyourguide
+    api: https://boards-api.greenhouse.io/v1/boards/getyourguide/jobs
+    enabled: true
+
+  - name: Contentful
+    careers_url: https://job-boards.greenhouse.io/contentful
+    api: https://boards-api.greenhouse.io/v1/boards/contentful/jobs
+    enabled: true
+
+  - name: SumUp
+    careers_url: https://job-boards.greenhouse.io/sumup
+    api: https://boards-api.greenhouse.io/v1/boards/sumup/jobs
+    enabled: true
+
+  - name: Forto
+    careers_url: https://jobs.ashbyhq.com/forto
+    enabled: true
+
+  - name: DeepL
+    careers_url: https://jobs.ashbyhq.com/DeepL
+    enabled: true
+
+  - name: Helsing
+    careers_url: https://job-boards.greenhouse.io/helsing
+    api: https://boards-api.greenhouse.io/v1/boards/helsing/jobs
+    enabled: true
+
+  - name: Parloa
+    careers_url: https://job-boards.eu.greenhouse.io/parloa
+    api: https://boards-api.greenhouse.io/v1/boards/parloa/jobs
+    enabled: true
+
+  - name: Allianz
+    careers_url: https://careers.allianz.com
+    provider: phenom
+    phenom:
+      selectedFields:
+        country: ["Germany"]
+    enabled: true
+
+  - name: BMW Group
+    careers_url: https://jobs.bmwgroup.com
+    provider: successfactors
+    api: https://jobs.bmwgroup.com
+    enabled: true
+
+  - name: SAP
+    careers_url: https://jobs.sap.com
+    provider: successfactors
+    api: https://jobs.sap.com
+    enabled: true
+
+  - name: Personio
+    careers_url: https://personio.jobs.personio.de
+    enabled: true
+
+  - name: n8n
+    careers_url: https://jobs.ashbyhq.com/n8n
+    enabled: true
+
+  - name: Munich Re
+    careers_url: https://careers.munichre.com/en/search-jobs
+    provider: radancy
+    enabled: true
+
+  - name: Cherry Ventures (portfolio)
+    careers_url: https://talent.cherry.vc/jobs
+    provider: getro
+    getro_collection: 44081
+    enabled: true
+
+  - name: HV Capital (portfolio)
+    careers_url: https://hv.getro.com/jobs
+    provider: getro
+    enabled: true
+
+  - name: Earlybird (portfolio)
+    careers_url: https://jobs.earlybird.com/jobs
+    provider: getro
+    enabled: true
+
+  - name: Volkswagen Group
+    careers_url: https://jobs.volkswagen-group.com
+    provider: successfactors
+    api: https://jobs.volkswagen-group.com
+    enabled: true
+
+  - name: Continental
+    careers_url: https://jobs.continental.com
+    provider: smartrecruiters
+    api: https://careers.smartrecruiters.com/Continental
+    enabled: true
+
+  - name: AUTO1
+    careers_url: https://careers.smartrecruiters.com/Auto1
+    enabled: true
+
+  - name: Zalando
+    careers_url: https://zalando.wd3.myworkdayjobs.com/ZalandoSiteWD
+    enabled: true
+
+  - name: Spotify
+    careers_url: https://jobs.lever.co/spotify
+    enabled: true
+
+  - name: Delivery Hero
+    careers_url: https://careers.smartrecruiters.com/deliveryhero
+    enabled: true
+
+  - name: Flix
+    careers_url: https://job-boards.greenhouse.io/flix
+    api: https://boards-api.greenhouse.io/v1/boards/flix/jobs
+    enabled: true
+
+  - name: Raisin
+    careers_url: https://job-boards.greenhouse.io/raisin
+    api: https://boards-api.greenhouse.io/v1/boards/raisin/jobs
+    enabled: true
+
+  - name: Enpal
+    careers_url: https://jobs.ashbyhq.com/enpal
+    enabled: true
+
+  - name: Scout24
+    careers_url: https://job-boards.greenhouse.io/scout24
+    api: https://boards-api.greenhouse.io/v1/boards/scout24/jobs
+    enabled: true
+
+  - name: Staffbase
+    careers_url: https://job-boards.greenhouse.io/staffbase
+    api: https://boards-api.greenhouse.io/v1/boards/staffbase/jobs
+    enabled: true
+
+  - name: Babbel
+    careers_url: https://jobs.ashbyhq.com/babbel
+    enabled: true
+
+  - name: Moonfare
+    careers_url: https://job-boards.greenhouse.io/moonfare
+    api: https://boards-api.greenhouse.io/v1/boards/moonfare/jobs
+    enabled: true
+
+  - name: Upvest
+    careers_url: https://jobs.ashbyhq.com/upvest
+    enabled: true
+
+  - name: IONOS
+    careers_url: https://job-boards.greenhouse.io/ionos
+    api: https://boards-api.greenhouse.io/v1/boards/ionos/jobs
+    enabled: true
+
+  - name: Moss
+    careers_url: https://jobs.ashbyhq.com/moss
+    enabled: true
+
+  - name: Pleo
+    careers_url: https://jobs.ashbyhq.com/pleo
+    enabled: true
+
+  - name: Doctolib
+    careers_url: https://job-boards.greenhouse.io/doctolib
+    api: https://boards-api.greenhouse.io/v1/boards/doctolib/jobs
+    enabled: true
+
+  - name: Bitpanda
+    careers_url: https://job-boards.greenhouse.io/bitpanda
+    api: https://boards-api.greenhouse.io/v1/boards/bitpanda/jobs
+    enabled: true
+
+  - name: trivago
+    careers_url: https://job-boards.greenhouse.io/trivago
+    api: https://boards-api.greenhouse.io/v1/boards/trivago/jobs
+    enabled: true
+
+  - name: Lingoda
+    careers_url: https://lingoda.pinpointhq.com
+    enabled: true
+
+  - name: Home24
+    careers_url: https://careers.smartrecruiters.com/Home24
+    enabled: true
+
+  - name: Smava
+    careers_url: https://join.com/companies/smava
+    enabled: true
+
+  - name: Mutares
+    careers_url: https://jobs.lever.co/mutares
+    enabled: true
+
+  - name: JustWatch
+    careers_url: https://jobs.lever.co/justwatch
+    enabled: true
+
+  - name: Tourlane
+    careers_url: https://jobs.ashbyhq.com/tourlane
+    enabled: true
+
+  - name: Grover
+    careers_url: https://job-boards.greenhouse.io/grover
+    api: https://boards-api.greenhouse.io/v1/boards/grover/jobs
+    enabled: true
+
+  - name: Choco
+    careers_url: https://jobs.ashbyhq.com/choco
+    enabled: true
+
+  - name: Dance
+    careers_url: https://dance.recruitee.com
+    enabled: true
+
+  - name: Everphone
+    careers_url: https://join.com/companies/everphone
+    enabled: true
+
+  - name: Cargo.one
+    careers_url: https://jobs.ashbyhq.com/cargo-one
+    enabled: true
+
+  - name: Henkel
+    careers_url: https://jobs.henkel.com
+    provider: successfactors
+    api: https://jobs.henkel.com
+    notes: "jobs.henkel.com 404. Playwright fallback in batch/scan-blocked-boards.mjs."
+    enabled: true
+
+  - name: DHL
+    careers_url: https://careers.dhl.com
+    provider: phenom
+    phenom:
+      selectedFields:
+        country: ["Germany"]
+    enabled: true
+
+  - name: Siemens
+    careers_url: https://jobs.siemens.com/en_US/externaljobs/SearchJobs
+    provider: avature
+    api: https://jobs.siemens.com/en_US/externaljobs/SearchJobs
+    max_pages: 80
+    enabled: true
+
+  - name: Infineon Technologies
+    careers_url: https://jobs.infineon.com
+    provider: phenom
+    phenom:
+      selectedFields:
+        country: ["Germany"]
+    notes: "API blocked. Playwright fallback in batch/scan-blocked-boards.mjs."
+    enabled: true
+
+  - name: Deutsche Bank
+    careers_url: https://db.wd3.myworkdayjobs.com/DBWebsite
+    enabled: true
+
+  - name: Rheinmetall
+    careers_url: https://rhe.wd3.myworkdayjobs.com/r1111
+    enabled: true
+
+interamt_searches:
+  - was: Praktikum
+  - was: Werkstudent
+  - was: Internship
+  - was: Working Student
+  - was: Trainee
+  - was: Analyst
+
+job_boards:
+  - name: Arbeitnow
+    provider: arbeitnow
+    max_pages: 5
+    enabled: true
+
+  - name: Arbeitsagentur — Germany intern / WS
+    provider: arbeitsagentur
+    arbeitsagentur:
+      keywords:
+        - "Praktikum"
+        - "Werkstudent"
+        - "Internship"
+        - "Working Student"
+        - "Praktikant"
+      days: 30
+      size: 100
+    enabled: true
+
+  - name: Landing.jobs
+    provider: landingjobs
+    enabled: true
+
+  - name: IBM — Germany
+    provider: ibm
+    ibm:
+      country: Germany
+    enabled: true

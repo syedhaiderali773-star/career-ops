@@ -1,0 +1,270 @@
+#!/usr/bin/env node
+import { mkdirSync, writeFileSync, readFileSync, existsSync, rmSync, readdirSync } from 'fs';
+import { resolve } from 'path';
+import { execFileSync } from 'child_process';
+import { buildHtml as buildCoverHtml } from '../generate-cover-letter.mjs';
+import {
+  classify, keywordsFrom, coverFor, buildPayload, fetchJd, companyName, DATE, CV_TPL,
+} from './redesign-pack-80.mjs';
+
+const TARGET = 40;
+const APPLIED = [
+  'tytan technologies', 'tactilia', 'marvel fusion', 'sap', 'solaris', 'ctrl qs',
+  'munich re', 'siemens energy', 'unternehmertum', 'westwing', 'upvest', 'jd.com',
+  'celonis', 'borgwarner', 'fresenius', 'airbus', 'samsung', 'peec', 'heidelberg',
+  'dyson', 'lemon.markets', 'taktile', 'tourlane', 'statista', 'xometry',
+  'lightspeed', 'lucanet', 'flexport', 'pigment', 'dun & bradstreet', 'almedia',
+  'yepoda', 'mirakl', 'numa',
+].map((s) => s.toLowerCase().replace(/[^a-z0-9äöüß]+/g, ' ').trim());
+
+function strip(html) {
+  return String(html || '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+}
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+function germanAboveA2(text) {
+  return /german\s*(b1|b2|c1|c2)\b.{0,40}(?:required|mandatory|erforderlich|must)|(?:required|mandatory|must|erforderlich).{0,40}german\s*(b1|b2|c1|c2)|fluency in german|fluent(?:ly)? in german|fluent german required|business[- ]fluent german|professional german required|excellent german required|very good german required|native(?:-level)? german|german native speaker|good knowledge of german|german c2|deutsch\s*(b1|b2|c1|c2).{0,20}(?:erforderlich|required)|flie[sß]ende deutschkenntnisse|verhandlungssicheres deutsch|muttersprachliches deutsch|sehr gute deutschkenntnisse|deutsch zwingend|working language.{0,25}german.{0,15}(?:required|must)/i.test(text || '');
+}
+
+function germanOnly(text) {
+  const de = (String(text || '').match(/\b(und|der|die|das|für|mit|wir|eine|Voraussetzungen|Aufgaben|Bewerbung|Kenntnisse)\b/gi) || []).length;
+  const en = (String(text || '').match(/\b(the|and|you|will|requirements|responsibilities|experience|role)\b/gi) || []).length;
+  return de > 25 && de > en * 2.5;
+}
+
+function certFinance(role, jd) {
+  return /econometrics|\bcfa\b|\bcpa\b|\bacca\b|steuerberater|wirtschaftsprüfer|chartered accountant|qualified accountant|cfa required|cpa required/.test(`${role} ${jd}`.toLowerCase());
+}
+
+function foreignPlace(loc, url, jd) {
+  const locUrl = `${loc} ${url}`.toLowerCase();
+  if (/mexico|méxico|monterrey|pennsylvania|amsterdam|netherlands|lisbon|portugal|glasgow|london|massachusetts|brockton|florida|united-states|united states|\busa\b|new-york|san-francisco/i.test(locUrl)) return true;
+  if (/addressCountry.: .(NL|US|GB|MX|PT|FR|ES|IT|PL|IN|PK)./i.test(jd || '')) return true;
+  if (/\b(location:\s*mexico|based in mexico|office in mexico|hamburg-pennsylvania)\b/i.test(`${loc} ${url} ${jd}`)) return true;
+  const t = `${loc} ${jd}`.toLowerCase();
+  if (!/germany|deutschland|munich|münchen|berlin|hamburg|frankfurt|cologne|köln|stuttgart|düsseldorf|leipzig|nuremberg|nürnberg|garching|karlsruhe|heidelberg|aachen|mannheim|darmstadt|dortmund|essen|bremen|dresden|hannover|ingolstadt|kassel|augsburg|mainz|feucht|wustermark|remote germany|hybrid germany|deutschlandweit/i.test(t)) {
+    return true;
+  }
+  return false;
+}
+
+function jdPosted(text) {
+  const m = String(text || '').match(/datePosted["']?\s*[:=]\s*["']?(\d{4}-\d{2}-\d{2})/i);
+  return m ? m[1] : '';
+}
+
+function recentEnough(posted, arbeitnow) {
+  if (posted === '2026-09-22' || posted === '2026-09-21') return true;
+  if (!posted && !arbeitnow) return true;
+  return false;
+}
+
+function isIntern(role) {
+  if (/internal/i.test(role) && !/(werkstudent|working student|praktikum|internship|(^|[^a-z])intern([^a-z]|$))/i.test(role)) return false;
+  return /(werkstudent|working student|praktikum|praktikant|internship|(^|[^a-z])intern([^a-z]|$)|student assistant)/i.test(role);
+}
+
+function slugify(company, role) {
+  return `ft24-${`${company}-${role}`.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40)}`;
+}
+
+function norm(s) {
+  return String(s || '').toLowerCase().replace(/\(.*?\)/g, ' ').replace(/[^a-z0-9äöüß&+]+/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function alreadyApplied(company) {
+  const c = norm(company);
+  return APPLIED.some((a) => c.includes(a) || a.includes(c.slice(0, 16)));
+}
+
+function ftScore(j) {
+  const t = `${j.role} ${j.loc}`.toLowerCase();
+  let s = 0;
+  if (/trainee|graduate|berufseinsteiger|absolvent/.test(t)) s += 12;
+  if (/analyst/.test(t)) s += 11;
+  if (/associate/.test(t)) s += 10;
+  if (/junior/.test(t)) s += 9;
+  if (/operations|supply chain|procurement|logistics/.test(t)) s += 10;
+  if (/product|portfolio|pricing/.test(t)) s += 8;
+  if (/strategy|business development|founder/.test(t)) s += 8;
+  if (/marketing|commercial/.test(t)) s += 7;
+  if (/munich|münchen/.test(t)) s += 8;
+  if (/berlin|hamburg|frankfurt/.test(t)) s += 4;
+  if (/\bmanager\b/.test(t) && !/programme|program|trainee/.test(t)) s -= 4;
+  if (/\bsr\.|\bsenior\b|\bstaff\b|director|head of|principal|teamleiter/.test(t)) s -= 40;
+  if (/retail sales associate|mobile associate - retail/.test(t)) s -= 6;
+  if (/engineer/.test(t) && !/associate/.test(t)) s -= 20;
+  return s;
+}
+
+const BAD = new Set([
+  'ft24-eversource-marketing-intake-coordinator-',
+  'ft24-lendinvest-financial-analyst-modelling',
+  'ft24-stryker-marketing-associate-clinical-edu',
+  'ft24-tmobile-mobile-associate-retail-sales',
+  'ft24-angeheuert-gmbh-operations-maintenance-e',
+  'ft24-ohb-teamleiter-in-it-operations-it-servi',
+  'ft24-bjak-strategy-operations-associate',
+  'ft24-bjak-business-operations-associate',
+  'ft24-constructor-customer-marketing-analyst-r',
+  'ft24-dataguard-business-development-represent',
+  'ft24-glassdollar-associate-product-owner',
+  'ft24-melotech-founders-associate-ai-product',
+  'ft24-n26-afc-compliance-controls-and-reviews-',
+  'ft24-omegga-finance-operations-associate-m-f-',
+  'ft24-sereact-gmbh-founder-s-associate-to-the-',
+  'ft24-tandem-health-medical-operations-dach-m-',
+  'ft24-taxfix-ai-automation-specialist-marketin',
+  'ft24-voize-founders-associate-ceo-office-m-f-',
+  'ft24-amboss-associate-medical-editor-us-stude',
+]);
+
+for (const name of readdirSync('output')) {
+  const m = name.match(/^(?:cv|cover)-syed-haider-ali-(ft24-[a-z0-9-]+)-2026-09-22\.pdf$/);
+  if (!m) continue;
+  if (BAD.has(m[1])) {
+    rmSync(resolve('output', name), { force: true });
+    process.stderr.write(`deleted ${name}\n`);
+  }
+}
+
+const keep = [];
+const seenUrl = new Set();
+const usedCo = new Map();
+const prev = JSON.parse(readFileSync('batch/pack-ft-24h.json', 'utf8'));
+for (const j of prev) {
+  if (BAD.has(j.slug)) continue;
+  const key = j.url.replace(/\/$/, '').split('?')[0].toLowerCase();
+  seenUrl.add(key);
+  const co = norm(j.company).slice(0, 24);
+  usedCo.set(co, (usedCo.get(co) || 0) + 1);
+  keep.push(j);
+}
+
+function loadHistory() {
+  const text = readFileSync('data/scan-history.tsv', 'utf8');
+  const jobs = [];
+  for (const line of text.split('\n').slice(1)) {
+    if (!line.trim()) continue;
+    const cols = line.split('\t');
+    const [url, , , title, company, , location, , postedAt] = cols;
+    const posted = String(postedAt || '').slice(0, 10);
+    if (posted !== '2026-09-22' && posted !== '2026-09-21') continue;
+    if (!url || !title) continue;
+    if (isIntern(title)) continue;
+    jobs.push({
+      url, company: company || 'Company', role: title, loc: location || '',
+      posted, city: (location || 'Germany').split(/[·,;]/)[0].trim() || 'Germany',
+      arbeitnow: /arbeitnow\.com/i.test(url),
+    });
+  }
+  return jobs;
+}
+
+const senior = /\bsenior\b|\bstaff\b|\bdirector\b|head of|vice president|\bprincipal\b|\bsr\.|teamleiter/i;
+const want = /trainee|analyst|associate|graduate|junior|coordinator|berufseinsteiger|absolvent|founder|account executive|business development|customer success|pmo|operations|procurement|marketing|strategy|people ops|human resources|pricing|sales ops/i;
+const candidates = [];
+for (const j of loadHistory()) {
+  const key = j.url.replace(/\/$/, '').split('?')[0].toLowerCase();
+  if (seenUrl.has(key)) continue;
+  if (alreadyApplied(j.company)) continue;
+  if (senior.test(j.role)) continue;
+  if (/software engineer|developer|data scientist|firmware|maintenance engineer/.test(j.role)) continue;
+  if (!want.test(j.role)) continue;
+  if (foreignPlace(j.loc, j.url, '')) continue;
+  const score = ftScore(j);
+  if (score < 8) continue;
+  candidates.push({ ...j, score, track: 'ft', slug: slugify(j.company, j.role) });
+}
+candidates.sort((a, b) => {
+  if (a.arbeitnow !== b.arbeitnow) return a.arbeitnow ? 1 : -1;
+  return b.score - a.score;
+});
+
+const drop = [];
+mkdirSync('output/_pack-ft24', { recursive: true });
+mkdirSync('jds', { recursive: true });
+const workdir = resolve('output/_pack-ft24');
+
+for (const job of candidates) {
+  if (keep.length >= TARGET) break;
+  const co = norm(job.company).slice(0, 24);
+  if ((usedCo.get(co) || 0) >= 2) continue;
+  process.stderr.write(`JD ${job.slug}\n`);
+  await sleep(1200);
+  const jd = await fetchJd(job);
+  if (jd.startsWith('ERROR')) {
+    drop.push({ slug: job.slug, reason: jd });
+    continue;
+  }
+  if (jd.length < 80) {
+    drop.push({ slug: job.slug, reason: 'empty-or-dead' });
+    continue;
+  }
+  const posted = jdPosted(jd);
+  if (!recentEnough(posted, job.arbeitnow)) {
+    drop.push({ slug: job.slug, reason: `stale-jd ${posted || 'nodate'}` });
+    continue;
+  }
+  if (germanAboveA2(jd)) {
+    drop.push({ slug: job.slug, reason: 'german-above-a2' });
+    continue;
+  }
+  if (germanOnly(jd)) {
+    drop.push({ slug: job.slug, reason: 'german-body' });
+    continue;
+  }
+  if (foreignPlace(job.loc, job.url, jd)) {
+    drop.push({ slug: job.slug, reason: 'not-germany' });
+    continue;
+  }
+  if (certFinance(job.role, jd)) {
+    drop.push({ slug: job.slug, reason: 'cert-finance-or-econometrics' });
+    continue;
+  }
+  const kws = keywordsFrom(`${jd} ${job.role}`);
+  keep.push({ ...job, kws, jd: jd.slice(0, 4000) });
+  usedCo.set(co, (usedCo.get(co) || 0) + 1);
+  seenUrl.add(job.url.replace(/\/$/, '').split('?')[0].toLowerCase());
+  writeFileSync(`jds/${job.slug}.md`, `# ${job.role}\n\nCompany: ${companyName(job)}\nLocation: ${job.city}\nURL: ${job.url}\n\n${jd.slice(0, 12000)}\n`);
+}
+
+writeFileSync('batch/pack-ft-24h.json', JSON.stringify(keep.map((j) => ({
+  slug: j.slug, company: companyName(j), role: j.role, city: j.city, url: j.url, kws: j.kws || [],
+})), null, 2));
+writeFileSync('batch/pack-ft-24h-fill-drop.json', JSON.stringify(drop, null, 2));
+
+const alreadyPdf = new Set(readdirSync('output').filter((n) => n.startsWith('cv-syed-haider-ali-ft24-')).map((n) => n.replace(/^cv-syed-haider-ali-/, '').replace(/-2026-09-22\.pdf$/, '')));
+const manifest = [];
+for (const job of keep) {
+  if (alreadyPdf.has(job.slug) && !job.jd) continue;
+  if (alreadyPdf.has(job.slug)) continue;
+  const group = classify(job);
+  const payload = buildPayload(job, group, job.kws || keywordsFrom(job.role));
+  const cvJson = resolve(workdir, `cv-${job.slug}.json`);
+  const cvHtml = resolve(workdir, `cv-${job.slug}.html`);
+  const cvPdf = resolve('output', `cv-syed-haider-ali-${job.slug}-${DATE}.pdf`);
+  writeFileSync(cvJson, JSON.stringify(payload));
+  execFileSync(process.execPath, ['build-cv-html.mjs', cvJson, cvHtml, CV_TPL], { stdio: 'inherit' });
+  try {
+    execFileSync(process.execPath, ['verify-ats.mjs', cvHtml, '--role', job.role, '--keywords', (job.kws || []).join(','), '--min-score', '70'], { stdio: 'inherit' });
+  } catch {
+    process.stderr.write(`ATS warn ${job.slug}\n`);
+  }
+  manifest.push({ input: cvHtml, output: cvPdf, format: 'a4' });
+  const coverHtml = resolve(workdir, `cover-${job.slug}.html`);
+  const coverPdf = resolve('output', `cover-syed-haider-ali-${job.slug}-${DATE}.pdf`);
+  writeFileSync(coverHtml, buildCoverHtml(coverFor(job, group, job.jd || job.role, job.kws || [])));
+  manifest.push({ input: coverHtml, output: coverPdf, format: 'a4' });
+}
+
+const manPath = resolve(workdir, 'manifest.json');
+writeFileSync(manPath, JSON.stringify(manifest, null, 2));
+if (manifest.length) {
+  execFileSync(process.execPath, ['generate-pdf.mjs', `--batch=${manPath}`, '--format=a4', '--allow-reorder'], { stdio: 'inherit' });
+}
+try { rmSync(workdir, { recursive: true, force: true }); } catch { /* ignore */ }
+console.log(JSON.stringify({ kept: keep.length, dropped: drop.length, newPdfs: manifest.length / 2 }, null, 2));

@@ -1,0 +1,378 @@
+{
+  "intern": [
+    {
+      "slug": "n24ws-deutsche-lufthansa-ag-internship-human-r",
+      "reason": "stale-jd 2024-06-25"
+    },
+    {
+      "slug": "n24ws-universal-investment-gmbh-working-studen",
+      "reason": "stale-jd 2026-09-07"
+    },
+    {
+      "slug": "n24ws-aptar-beauty-home-working-student-procur",
+      "reason": "stale-jd 2026-09-15"
+    },
+    {
+      "slug": "n24ws-allianz-intern-in-global-sustainability-",
+      "reason": "expired-jd pattern matched: \\b(?:job|jobs|position|role|posting|opening|vacancy|requisition|req|listing)\\b[\\s\\S]{0,60}?(?<!\\b(?:application|form)\\s)has been filled\\b(?!\\s+out)"
+    },
+    {
+      "slug": "n24ws-allianz-working-student-global-customer-",
+      "reason": "expired-jd pattern matched: \\b(?:job|jobs|position|role|posting|opening|vacancy|requisition|req|listing)\\b[\\s\\S]{0,60}?(?<!\\b(?:application|form)\\s)has been filled\\b(?!\\s+out)"
+    },
+    {
+      "slug": "n24ws-infineon-technologies-internships-workin",
+      "reason": "stale-jd 2026-07-10"
+    },
+    {
+      "slug": "n24ws-infineon-technologies-working-student-ba",
+      "reason": "stale-jd 2026-08-10"
+    },
+    {
+      "slug": "n24ws-sitegeist-gmbh-working-student-forward-d",
+      "reason": "stale-jd 2026-08-19"
+    },
+    {
+      "slug": "n24ws-thermo-fisher-scient-messt-gmbh-calling-",
+      "reason": "stale-jd 2026-02-12"
+    },
+    {
+      "slug": "n24ws-sitegeist-gmbh-working-student-mechanica",
+      "reason": "stale-jd 2026-08-19"
+    },
+    {
+      "slug": "n24ws-doctolib-working-student-it-asset-stock-",
+      "reason": "gate"
+    },
+    {
+      "slug": "n24ws-universal-investment-gmbh-working-studen",
+      "reason": "stale-jd 2026-08-06"
+    },
+    {
+      "slug": "n24ws-reonic-venture-development-intern-new-pr",
+      "reason": "stale-jd 2026-06-24"
+    },
+    {
+      "slug": "n24ws-zenjob-working-student-staffing-operatio",
+      "reason": "stale-jd 2026-09-21"
+    },
+    {
+      "slug": "n24ws-liqid-lig-intern-product-f-m-d",
+      "reason": "stale-jd 2026-08-21"
+    },
+    {
+      "slug": "n24ws-lyceum-people-talent-intern",
+      "reason": "stale-jd 2026-07-22"
+    },
+    {
+      "slug": "n24ws-planqc-gmbh-working-student-it-support-s",
+      "reason": "stale-jd 2026-08-26"
+    },
+    {
+      "slug": "n24ws-v-ridion-working-student-pr-communicatio",
+      "reason": "stale-jd 2026-07-20"
+    },
+    {
+      "slug": "n24ws-munich-electrification-working-student-s",
+      "reason": "stale-jd 2026-07-30"
+    },
+    {
+      "slug": "n24ws-lyceum-technical-founders-associate-inte",
+      "reason": "stale-jd 2026-07-22"
+    },
+    {
+      "slug": "n24ws-indiekidz-gmbh-software-test-qa-automati",
+      "reason": "stale-jd 2026-09-18"
+    },
+    {
+      "slug": "n24ws-augustus-internship",
+      "reason": "stale-jd 2026-07-17"
+    },
+    {
+      "slug": "n24ws-prior-labs-research-scientist-intern-phd",
+      "reason": "stale-jd 2026-06-25"
+    },
+    {
+      "slug": "n24ws-infiniteroots-working-student-brand-amba",
+      "reason": "stale-jd 2026-08-28"
+    },
+    {
+      "slug": "n24ws-liqid-lig-internship-organisational-deve",
+      "reason": "stale-jd 2026-07-23"
+    },
+    {
+      "slug": "n24ws-solactive-working-student-m-f-d-indexing",
+      "reason": "stale-jd 2026-09-18"
+    },
+    {
+      "slug": "n24ws-solactive-working-student-m-f-d-quantita",
+      "reason": "stale-jd 2026-09-18"
+    },
+    {
+      "slug": "n24ws-adjoe-working-student-graphic-designer-f",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ws-letmeship-working-student-invoice-checki",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ws-edri-working-student-ai-enablement-m-f-d",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ws-okapi-orbits-gmbh-working-student-recrui",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ws-quantum-systems-gmbh-working-student-gro",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    }
+  ],
+  "ft": [
+    {
+      "slug": "n24ft-scalable-capital-junior-client-service-a",
+      "reason": "gate"
+    },
+    {
+      "slug": "n24ft-expertplace-professionals-gmbh-junior-da",
+      "reason": "dead-link HTTP 410"
+    },
+    {
+      "slug": "n24ft-lantenhammer-consulting-silvia-lantenham",
+      "reason": "stale-jd 2024-02-16"
+    },
+    {
+      "slug": "n24ft-sal-service-gmbh-hr-reporting-analyst",
+      "reason": "dead-link HTTP 410"
+    },
+    {
+      "slug": "n24ft-scalable-capital-junior-operations-manag",
+      "reason": "gate"
+    },
+    {
+      "slug": "n24ft-deutsche-bahn-junior-projektingenieur-in",
+      "reason": "dead-link HTTP 404"
+    },
+    {
+      "slug": "n24ft-deutsche-bahn-junior-trainer-in-gleisbau",
+      "reason": "stale-jd 2026-06-23"
+    },
+    {
+      "slug": "n24ft-michael-page-zeitarbeit-gmbh-finance-com",
+      "reason": "stale-jd 2026-02-12"
+    },
+    {
+      "slug": "n24ft-50hertz-transmission-gmbh-ad-berlin-busi",
+      "reason": "gate"
+    },
+    {
+      "slug": "n24ft-kpmg-ag-wirtschaftspr-fungs-gesellschaft",
+      "reason": "dead-link HTTP 410"
+    },
+    {
+      "slug": "n24ft-nect-gmbh-data-analyst-all-genders",
+      "reason": "stale-jd 2026-07-14"
+    },
+    {
+      "slug": "n24ft-jetbrains-gmbh-data-analyst-jetbrains-ai",
+      "reason": "stale-jd 2026-07-07"
+    },
+    {
+      "slug": "n24ft-ferchau-gmbh-niederlassung-frankfurt-bus",
+      "reason": "stale-jd 2026-09-21"
+    },
+    {
+      "slug": "n24ft-finanz-informatik-business-analyst-payme",
+      "reason": "stale-jd 2026-09-19"
+    },
+    {
+      "slug": "n24ft-deutsche-bank-corporate-finance-corporat",
+      "reason": "stale-jd 2026-08-04"
+    },
+    {
+      "slug": "n24ft-deutsche-bank-associate-f-m-x-investment",
+      "reason": "stale-jd 2026-04-02"
+    },
+    {
+      "slug": "n24ft-delivery-hero-engineer-ii-kotlin-java-lo",
+      "reason": "expired-jd pattern matched: this job has expired"
+    },
+    {
+      "slug": "n24ft-aero-highprofessionals-gmbh-prozesskoord",
+      "reason": "stale-jd 2026-09-07"
+    },
+    {
+      "slug": "n24ft-delivery-hero-associate-hero-support",
+      "reason": "expired-jd pattern matched: this job has expired"
+    },
+    {
+      "slug": "n24ft-enpal-junior-legal-counsel-corporate-w-m",
+      "reason": "gate"
+    },
+    {
+      "slug": "n24ft-dm-drogerie-markt-gmbh-co-kg-data-analys",
+      "reason": "gate"
+    },
+    {
+      "slug": "n24ft-spie-germany-switzerland-austria-gmbh-ai",
+      "reason": "stale-jd 2026-07-15"
+    },
+    {
+      "slug": "n24ft-robert-bosch-gmbh-data-analyst-energiema",
+      "reason": "stale-jd 2026-09-08"
+    },
+    {
+      "slug": "n24ft-robert-bosch-gmbh-data-analyst-energiema",
+      "reason": "stale-jd 2026-09-08"
+    },
+    {
+      "slug": "n24ft-datagroup-operations-gmbh-gesch-ftsstell",
+      "reason": "stale-jd 2026-06-19"
+    },
+    {
+      "slug": "n24ft-dis-ag-germany-business-analyst-sap-m-w-",
+      "reason": "stale-jd 2026-09-21"
+    },
+    {
+      "slug": "n24ft-mercedes-benz-sap-basis-interface-operat",
+      "reason": "gate"
+    },
+    {
+      "slug": "n24ft-lingoda-team-lead-health-operations-logi",
+      "reason": "stale-jd 2026-09-01"
+    },
+    {
+      "slug": "n24ft-lingoda-team-lead-operations-all-genders",
+      "reason": "stale-jd 2026-09-08"
+    },
+    {
+      "slug": "n24ft-quantum-systems-lead-warehouse-logistics",
+      "reason": "stale-jd 2026-09-17"
+    },
+    {
+      "slug": "n24ft-hellofresh-schichtleiter-warehouse-opera",
+      "reason": "expired-jd pattern matched: \\b(?:job|jobs|position|role|posting|opening|vacancy|requisition|req|listing)\\b[\\s\\S]{0,60}?(?<!\\b(?:application|form)\\s)has been filled\\b(?!\\s+out)"
+    },
+    {
+      "slug": "n24ft-allgeier-experts-gmbh-pmo-supply-chain",
+      "reason": "stale-jd 2025-01-15"
+    },
+    {
+      "slug": "n24ft-roland-berger-financehub-e-v-x-roland-be",
+      "reason": "gate"
+    },
+    {
+      "slug": "n24ft-roland-berger-einblick-in-die-strategieb",
+      "reason": "gate"
+    },
+    {
+      "slug": "n24ft-headmatch-gmbh-co-kg-people-analytics-re",
+      "reason": "stale-jd 2026-07-31"
+    },
+    {
+      "slug": "n24ft-atira-brand-product-marketing",
+      "reason": "stale-jd 2026-07-22"
+    },
+    {
+      "slug": "n24ft-lyceum-technical-founders-associate",
+      "reason": "stale-jd 2026-07-22"
+    },
+    {
+      "slug": "n24ft-predium-technology-gmbh-associate-data-s",
+      "reason": "gate"
+    },
+    {
+      "slug": "n24ft-likeyaa-gmbh-junior-projektmanager-in-so",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-adjoe-business-solutions-analyst-f-m-d",
+      "reason": "stale-jd 2026-06-25"
+    },
+    {
+      "slug": "n24ft-eraneos-manager-sap-ewm-logistics-supply",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-roadsurfer-teamlead-procurement-m-w-d",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-lyceum-growth-associate",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-brl-junior-system-engineer-microsoft-365",
+      "reason": "stale-jd 2026-09-14"
+    },
+    {
+      "slug": "n24ft-artefact-consulting-manager-m-f-d-data-a",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-metycle-data-analyst-m-f-d",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-deepsetai-growth-marketing-lead",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-pergolux-performance-marketing-specialis",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-adjoe-vp-of-marketing-f-m-d",
+      "reason": "stale-jd 2026-07-10"
+    },
+    {
+      "slug": "n24ft-stealthrocketrystartup-procurement-speci",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-proxima-fusion-gmbh-people-operations-ma",
+      "reason": "stale-jd 2026-09-11"
+    },
+    {
+      "slug": "n24ft-proxima-fusion-gmbh-procurement-manager-",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-plukon-food-group-germany-leiter-supply-",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-lavol-deine-logop-die-und-ergotherapie-t",
+      "reason": "gate"
+    },
+    {
+      "slug": "n24ft-v-ridion-vp-finance-all-genders",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-phlair-finance-lead-m-f-d",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-carbmee-account-executive-climate-tech-s",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-databricks-strategic-core-account-execut",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-databricks-strategic-core-account-execut",
+      "reason": "gate"
+    },
+    {
+      "slug": "n24ft-tebi-account-executive-munich",
+      "reason": "ERROR HTTP 429 Too Many Requests"
+    },
+    {
+      "slug": "n24ft-cohere-business-development-representati",
+      "reason": "stale-jd 2026-07-31"
+    }
+  ]
+}

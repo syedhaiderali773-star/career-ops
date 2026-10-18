@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<!-- career-ops-template
+name: DACH
+version: 1.0.0
+-->
+<html lang="{{LANG}}">
+<head>
+<meta charset="UTF-8">
+<title>{{NAME}} — CV</title>
+<style>
+  :root {
+    --accent-color: #1B3A4B;
+    --secondary-color: #1B3A4B;
+    --font-family: "Liberation Sans", 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif;
+    --font-size: 10px;
+    --page-margin: 0.5in;
+    --rail-width: 88px;
+  }
+  @page { margin: var(--page-margin); }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "clig" 0, "dlig" 0;
+  }
+
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    line-height: 1.4;
+    color: #1a1f26;
+    background: #ffffff;
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "clig" 0, "dlig" 0;
+  }
+
+  .page {
+    max-width: {{PAGE_WIDTH}};
+    margin: 0 auto;
+    background: #ffffff;
+  }
+
+  .cv-photo {
+    float: right;
+    width: 64px;
+    height: 80px;
+    object-fit: cover;
+    margin: 0 0 6px 10px;
+    border: 1px solid #d8dde5;
+  }
+  .cv-photo.rounded { border-radius: 2px; }
+  .cv-photo.circle  { border-radius: 50%; }
+  .cv-photo.square  { border-radius: 0; }
+
+  .header {
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    border-bottom: 1.5px solid var(--accent-color);
+  }
+
+  .header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--accent-color);
+    line-height: 1.15;
+  }
+
+  .contact-row {
+    margin-top: 3px;
+    font-size: 9px;
+    color: #4a5260;
+  }
+
+  .contact-row a { color: #4a5260; text-decoration: none; }
+  .separator { margin: 0 5px; color: #b0b7c2; }
+
+  .section {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    flex: 0 0 var(--rail-width);
+    width: var(--rail-width);
+    font-size: 8.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-color);
+    padding-top: 1.5px;
+    border-right: 1px solid #c5cdd6;
+    padding-right: 8px;
+    text-align: right;
+  }
+
+  .section > *:not(.section-title) { flex: 1 1 auto; min-width: 0; }
+
+  .summary-text { text-align: justify; color: #2a3340; }
+
+  .competencies-grid { line-height: 1.55; }
+
+  .competency-tag {
+    display: inline-block;
+    background: transparent;
+    border: 0.6px solid #c5cdd6;
+    border-radius: 0;
+    padding: 0 5px;
+    margin: 0 3px 3px 0;
+    font-size: 8.5px;
+    color: #1B3A4B;
+    white-space: nowrap;
+  }
+
+  .job { margin-bottom: 7px; }
+  .job:last-child { margin-bottom: 0; }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .job-company {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--accent-color);
+  }
+
+  .job-period {
+    font-size: 8.5px;
+    color: #5c6570;
+    white-space: nowrap;
+  }
+
+  .job-role {
+    font-size: 9.5px;
+    font-weight: 600;
+    color: #2a3340;
+  }
+
+  .job-subrole {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 5px;
+    margin-bottom: 1px;
+  }
+  .job-subrole:first-of-type { margin-top: 3px; }
+  .job-subrole .job-role { margin-bottom: 0; }
+
+  .job-location {
+    font-size: 8.5px;
+    color: #6b7480;
+  }
+
+  .job ul {
+    margin-top: 2px;
+    padding-left: 13px;
+  }
+
+  .job li {
+    margin-bottom: 1.5px;
+    text-align: justify;
+    color: #2a3340;
+  }
+
+  .project { margin-bottom: 4px; }
+  .project-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--accent-color);
+  }
+  .project-badge { font-size: 8px; color: #5c6570; margin-left: 4px; }
+  .project-desc { text-align: justify; }
+  .project-tech { font-size: 8.5px; color: #5c6570; }
+
+  .edu-item { margin-bottom: 5px; }
+  .edu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .edu-title { font-weight: 700; color: #1a1f26; }
+  .edu-org { font-weight: 400; color: #2a3340; }
+  .edu-year { font-size: 8.5px; color: #5c6570; white-space: nowrap; }
+  .edu-location { font-size: 8.5px; color: #6b7480; }
+  .edu-desc { text-align: justify; margin-top: 1px; }
+
+  .cert-table,
+  .award-table { display: block; }
+  .cert-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 1px;
+  }
+  .cert-title { font-weight: 700; }
+  .cert-org { flex: 1; color: #2a3340; }
+  .cert-year { font-size: 8.5px; color: #5c6570; white-space: nowrap; }
+
+  .skills-grid { display: block; }
+  .skill-item { margin-bottom: 2px; }
+  .skill-category { font-weight: 700; color: var(--accent-color); }
+
+  .header,
+  .edu-item,
+  .cert-item,
+  .competency-tag,
+  .skill-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .section-title,
+  .job-company,
+  .job-role,
+  .job-subrole,
+  .job-location,
+  .edu-location,
+  .project-title {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .project-tech {
+    break-before: avoid;
+    page-break-before: avoid;
+  }
+
+  @media print {
+    .page { padding: 0 0.12in 0 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  {{PHOTO}}
+  <!-- HEADER -->
+  <div class="header">
+    <h1>{{NAME}}</h1>
+    <div class="contact-row">
+      <a href="tel:{{PHONE}}">{{PHONE}}</a>
+      <span class="separator">|</span>
+      <a href="mailto:{{EMAIL}}">{{EMAIL}}</a>
+      <span class="separator">|</span>
+      <a href="{{LINKEDIN_URL}}">{{LINKEDIN_DISPLAY}}</a>
+      <span class="separator">|</span>
+      <a href="{{PORTFOLIO_URL}}">{{PORTFOLIO_DISPLAY}}</a>
+      <span class="separator">|</span>
+      <span>{{LOCATION}}</span>
+    </div>
+  </div>
+
+  <!-- PROFESSIONAL SUMMARY -->
+  <div class="section">
+    <div class="section-title">{{SECTION_SUMMARY}}</div>
+    <div class="summary-text">{{SUMMARY_TEXT}}</div>
+  </div>
+
+  <!-- CORE COMPETENCIES -->
+  <div class="section">
+    <div class="section-title">{{SECTION_COMPETENCIES}}</div>
+    <div class="competencies-grid">
+      {{COMPETENCIES}}
+    </div>
+  </div>
+
+  <!-- WORK EXPERIENCE -->
+  <div class="section">
+    <div class="section-title">{{SECTION_EXPERIENCE}}</div>
+    <div class="experience-body">
+      {{EXPERIENCE}}
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section">
+    <div class="section-title">{{SECTION_PROJECTS}}</div>
+    <div class="projects-body">
+      {{PROJECTS}}
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="section">
+    <div class="section-title">{{SECTION_EDUCATION}}</div>
+    <div class="education-body">
+      {{EDUCATION}}
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="section">
+    <div class="section-title">{{SECTION_CERTIFICATIONS}}</div>
+    <div class="cert-table">{{CERTIFICATIONS}}</div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="section">
+    <div class="section-title">{{SECTION_SKILLS}}</div>
+    <div class="skills-body">
+      {{SKILLS}}
+    </div>
+  </div>
+
+  <!-- END -->
+
+</div>
+</body>
+</html>
